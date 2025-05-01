@@ -1,51 +1,45 @@
-#include <iostream>
-#include <algorithm>
-#include <climits>
-#include <cmath>
+/*
+Problem: Segregate 0s and 1s in array
 
+- Given an array with random 0s and 1s
+- Goal: Put 0s on left, 1s on right
+- Constraint: Single traversal only
+
+Algorithm:
+1. Use two pointers:
+    - lo = 0 (start of array)
+    - hi = length-1 (end of array)
+2. Move lo right until finding a 1
+3. Move hi left until finding a 0
+4. Swap elements at lo and hi
+5. Repeat until pointers meet
+*/
+#include <iostream>
+#include <vector>
 using namespace std;
 
-int ClosestToZero_SortAndBinarySearch(int *arr,int Size){
-    sort(arr,arr+Size);
-    int n = Size;
-    int res = INT_MIN;
-    for(int i=0;i<n;i++){
-        int x = arr[i];
-        
-        int left = i+1,right = n-1;
-        while(left<=right){
-            int mid = (left+right)/2;
-            
-            int current = arr[mid]+x;
-            if(current == 0){
-                return current;
-            }
-            
-            if(abs(current) < abs(res)){
-                res = current;
-            }
+// Function to put all 0s on the left and 
+// all 1s on the right
+void segregate0and1(vector<int>& arr) {
+    int lo = 0;
+    int hi = arr.size() - 1;
 
-            if(current < 0){
-                left = mid + 1;
+    while (lo < hi) {
+      
+        // If we have a 1 at lo
+        if (arr[lo] == 1) {
+          
+            // And a 0 at hi
+            if (arr[hi] != 1) {
+                swap(arr[lo], arr[hi]);
+                lo++;
+                hi--;
             }
-            else{
-                right = mid - 1; 
-            }
+            else {          
+                hi--;
+            }  
+        } else {
+            lo++;
         }
     }
-    return res;
-    
-}
-int ClosestToZero_TwoPointer(int *arr,int Size){
-    sort(arr,arr+Size);
-    int i=0;
-    int j=Size-1;
-    int res = INT_MIN;
-    
-    
-
-}
-int main() {
-    int arr[6] = {-8, -5, -3, 1, 4, 7};
-    
 }
